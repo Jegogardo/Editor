@@ -1,0 +1,43 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="style.css">
+    </head>
+
+    <body>
+        <!--
+<div id="editor">
+
+<span id="scrivi">provaprova</span>
+<div>
+<span id="copia_scrivi">provaprova</span>
+<span class="cursor"></span>
+</div>
+
+</div> -->
+
+    </body>
+    <script src="../Bhv-compiled.js"></script>
+    <script src="debug.js"></script>
+    <script src="script.js"></script>
+    <!-- <script src="script-compiled.js"></script> -->
+    <script>
+
+        var editor = new Editor();
+        var cursor = new Cursor();
+
+        editor.el.appendChild(cursor.wrapper);
+        cursor.init( "provaprova" );
+
+        // document.querySelector("#scrivi").contentEditable = true;
+     /*   var copia = document.querySelector("#copia_scrivi");
+
+        document.querySelector("#scrivi").addEventListener("keyup",(e)=>{
+
+            copia.textContent = e.target.textContent;
+
+        });*/
+
+
+
+    </script>
+</html>

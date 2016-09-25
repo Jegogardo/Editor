@@ -1,0 +1,54 @@
+
+body{
+    margin: 0;
+}
+
+input,div{
+    font-size: 30px;
+}
+
+#editor{
+    width: 500px;
+    height: 500px;
+    border: 1px solid black;
+    position: relative;
+}
+
+.cursor{
+    opacity: 0;
+    background: black;
+    position: relative;
+    left: 0px;
+    width: 1px;
+    height: 1em;
+    top: .2em;
+    transition: opacity 150ms;
+}
+
+.cursor--blink{
+    opacity: 1;
+}
+
+.cursor_wrapper {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    pointer-events: none;
+}
+
+.cursor_copy {
+    left: 0px;
+    position: relative;
+    color: transparent !important;
+    display: inline-block;
+}
+
+.cursor_wrapper span{
+    display:inline-block;
+}
+
+.scrivi, .cursor_copy{
+    margin: 0;
+}
