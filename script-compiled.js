@@ -54,32 +54,49 @@ var Editor = function () {
             this.focusHandler = document.addEventListener("keydown", function (e) {
                 //if( this.Editor.isFocused ){
                 switch (e.which) {
+                    case 32:
+                        {
+                            // Space ' '
+                            //this.text.textContent += " ";
+                            //  cursor.right(this.text.textContent);
+                            cursor.space();
+                            break;
+                        }
                     case 38:
                         {
-                            //↑
+                            // ArrowUp ↑
 
                             break;
                         }
                     case 40:
                         {
-                            // ↓
-
+                            // ArrowDown ↓
                             break;
                         }
                     case 39:
                         {
-                            cursor.right(_this.text.textContent); // →
+                            cursor.right(_this.text.textContent); // ArrowRight →
                             break;
                         }
                     case 37:
                         {
-                            cursor.left(); // ←
+                            cursor.left(); // ArrowLeft ←
                             break;
                         }
                     default:
-                        {}
+                        {
+                            if (e.code.startsWith("Key") && !e.metaKey && !e.ctrlKey) {
+                                _this.text.textContent += e.key;
+                                cursor.right(_this.text.textContent);
+                            }
+                            //this.selectedSheet.Append(e.key);
+                        }
                 }
-                if (EDITOR_LOG_KEYBOARD) console.log("Simbolo: '" + e.key + "'\nCodice " + e.which + "\nCTRLKey: " + e.ctrlKey + "\nShiftKey: '" + e.shiftKey + "'");
+                if (typeof EDITOR_LOG_KEYBOARD != null && EDITOR_LOG_KEYBOARD == true) {
+                    if (typeof EDITOR_LOG_CLEAN_KEYBOARD != null && EDITOR_LOG_CLEAN_KEYBOARD == true) console.clear();
+                    console.log("Simbolo: '" + e.key + "'\nCodice " + e.which + "\nCTRLKey: " + e.ctrlKey + "\nShiftKey: '" + e.shiftKey + "'");
+                    console.dir(e);
+                }
                 //}
             });
         }
@@ -99,11 +116,13 @@ var Cursor = function () {
         _classCallCheck(this, Cursor);
 
         this.wrapper = newEl("div,,cursor_wrapper");
-        this.copy = newEl("span,,cursor_copy", this.wrapper);
+        this.copy = newEl("p,,cursor_copy", this.wrapper);
         this.el = newEl("span, ," + CURSOR_CLASS, this.wrapper);
 
         this.isHidden = false;
         this.isBlinked = false;
+
+        if (typeof CURSOR_ALWAYS_SHOWED != null && CURSOR_ALWAYS_SHOWED == true) this.show();
     }
 
     _createClass(Cursor, [{
@@ -131,6 +150,11 @@ var Cursor = function () {
         key: "hide",
         value: function hide() {
             classie.remove(this.el, CURSOR_BLINKED_CLASS);
+        }
+    }, {
+        key: "space",
+        value: function space() {
+            this.copy.textContent += "a";
         }
     }, {
         key: "left",

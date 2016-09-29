@@ -40,35 +40,49 @@ class Editor{
     }
 
     focus(){
+        this.el.focus();
         //this.Editor.isFocused = true;
         this.focusHandler = document.addEventListener("keydown",(e)=>{
             //if( this.Editor.isFocused ){
-            switch( e.which ){
-                case 32:{ // Space ' '
-                    //this.text.textContent += " ";
-                  //  cursor.right(this.text.textContent);
-                    cursor.space();
-                    break;
-                }
-                case 38:{ // ArrowUp ↑
-
-                    break;
-                }
-                case 40:{ // ArrowDown ↓
-                    break;
-                }
-                case 39:{ cursor.right(this.text.textContent); // ArrowRight →
-                         break;}
-                case 37:{ cursor.left(); // ArrowLeft ←
-                         break;
-                        }
-                default:{
-                    if( e.code.startsWith("Key") && !e.metaKey && !e.ctrlKey ){
-                        this.text.textContent+=e.key
-                        cursor.right(this.text.textContent);
+            if( typeof EDITOR_STOP_LISTENING_EVENTS != null && EDITOR_STOP_LISTENING_EVENTS != true){
+                switch( e.which ){
+                    case 8:{ // Backspace
+                        e.preventDefault();
+                        this.text.textContent = this.text.textContent.substring(0, this.text.textContent.length-1)
+                        cursor.left();
+                        break;
                     }
-                    //this.selectedSheet.Append(e.key);
 
+                    case 32:{ // Space ' '
+                        e.preventDefault();
+                        //this.text.textContent += " ";
+                        //  cursor.right(this.text.textContent);
+                        cursor.space();
+                        this.text.textContent+=" ";
+                        break;
+                    }
+                    case 38:{ // ArrowUp ↑
+
+                        break;
+                    }
+                    case 40:{ // ArrowDown ↓
+                        break;
+                    }
+                    case 39:{ cursor.right(this.text.textContent); // ArrowRight →
+                             break;}
+                    case 37:{ cursor.left(); // ArrowLeft ←
+                             break;
+                            }
+                    default:{
+                        if( (e.keyCode >= 48 && e.keyCode <= 90) ||
+                            (e.keyCode >= 96 && e.keyCode <= 111)
+                          ){
+                            this.text.textContent+=e.key
+                            cursor.right(this.text.textContent);
+                        }
+                        //this.selectedSheet.Append(e.key);
+
+                    }
                 }
             }
             if( typeof EDITOR_LOG_KEYBOARD != null && EDITOR_LOG_KEYBOARD == true){
@@ -129,7 +143,8 @@ class Cursor{
     }
 
     space(){
-        this.copy.textContent += "a";
+        this.copy.innerHTML+="&nbsp;"
+
     }
 
     left(){
