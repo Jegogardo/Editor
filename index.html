@@ -16,20 +16,25 @@
 </div> -->
 
     </body>
-    <script src="../Bhv-compiled.js"></script>
+    <!--
+<script src="../Bhv-compiled.js"></script>
+<script src="debug-compiled.js"></script>
+<script src="script-compiled.js"></script>
+-->
+    <script src="../Bhv.js"></script>
     <script src="debug.js"></script>
     <script src="script.js"></script>
-    <!-- <script src="script-compiled.js"></script> -->
     <script>
-
+        var v = newEl("div");
+        classie.add(v,"oo");
         var editor = new Editor();
-        var cursor = new Cursor();
+  //      var cursor = new Cursor();
 
-        editor.el.appendChild(cursor.wrapper);
-        cursor.init( "provaprova" );
+        //editor.el.appendChild(cursor.wrapper);
+//        cursor.init( "provaprova" );
 
         // document.querySelector("#scrivi").contentEditable = true;
-     /*   var copia = document.querySelector("#copia_scrivi");
+        /*   var copia = document.querySelector("#copia_scrivi");
 
         document.querySelector("#scrivi").addEventListener("keyup",(e)=>{
 
@@ -38,6 +43,6 @@
         });*/
 
 
-
+        var t = newEl("div");
     </script>
 </html>

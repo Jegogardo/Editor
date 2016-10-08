@@ -1,0 +1,67 @@
+<link rel="stylesheet" href="../style.css">
+<body>
+    <div>
+        <!-- <Line>
+
+<Content>Scritto</Content><Cursor></Cursor>
+
+</Line> -->
+    </div>
+</body>
+<script src="../../Bhv.js"></script>
+<script src="Line+cursor.js"></script>
+<style>
+
+    .line{
+        position: relative;
+        
+    }
+    
+    .line > *{
+        padding-left: .5em;
+    }
+
+    .line_content{
+        margin: 0;
+    }
+
+
+    .line_cursor_wrapper{
+        display: inline-block;
+        position: absolute;
+        left: 0;
+    }
+
+    .line_cursor_copy {
+        left: 0px;
+        position: relative;
+        color: transparent !important;
+        display: inline-block;
+        margin: 0;
+    }
+
+    .line_cursor{
+        background: black;
+        position: relative;
+        left: 0px;
+        width: 1px;
+        height: .9em;
+        top: .2em;
+        opacity: 1;
+        -webkit-transition: opacity 150ms;
+        -o-transition: opacity 150ms;
+        transition: opacity 150ms;
+        display: inline-block;
+    }
+
+    .line_cursor-blink{
+
+        opacity: 0;
+    }
+
+    .line-selected{
+        background-color: rgba(202,248,255,1);
+    }
+
+
+</style>

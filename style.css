@@ -1,10 +1,14 @@
-
 body{
     margin: 0;
 }
 
+*{
+    box-sizing: border-box;
+}
+
 input,div{
     font-size: 30px;
+    box-sizing:content-box;
 }
 
 #editor{
@@ -49,6 +53,41 @@ input,div{
     display:inline-block;
 }
 
-.scrivi, .cursor_copy{
+.line,.scrivi, .cursor_copy{
     margin: 0;
+}
+
+
+header.editor_header {
+    display: block;
+    background-color: rgba(150, 141, 141, .6);
+    height: 50px;
+}
+
+counter.editor_counter {
+    display: inline-block;
+    height: 100%;
+    width: 30px;
+    background-color: #ececec;
+    color: black;
+}
+
+editor.editor_wrapper {
+    display: block;
+    border: 1px solid black;
+}
+
+body.editor_body {
+    display: inline-block;
+    float: right;
+    background-color: pink;
+    height: 100%;
+    width: calc(100% - 30px);
+    padding: 1em;
+}
+
+.sheet_view {
+    position: relative;
+    width: 100%;
+    height: 100%;
 }
