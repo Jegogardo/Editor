@@ -187,6 +187,9 @@ var Editor = function () {
                     default:
                         {}
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of 1df1e1e... Added space and alphanumeric key
+=======
 >>>>>>> parent of 1df1e1e... Added space and alphanumeric key
 =======
 >>>>>>> parent of 1df1e1e... Added space and alphanumeric key
@@ -247,11 +250,14 @@ var Cursor = function () {
     }, {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         key: "space",
         value: function space() {
             this.copy.innerHTML += "&nbsp;";
         }
     }, {
+=======
+>>>>>>> parent of 1df1e1e... Added space and alphanumeric key
 =======
 >>>>>>> parent of 1df1e1e... Added space and alphanumeric key
 =======

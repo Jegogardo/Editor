@@ -101,6 +101,7 @@ class Editor{
     }
 
     focus(){
+<<<<<<< HEAD
         this.el.wrapper.focus();
         //this.Editor.isFocused = true;
         this.focusHandler = document.addEventListener("keydown",(e)=>{
@@ -151,10 +152,37 @@ class Editor{
                             //this.text.textContent+=e.key
                             this.selectedSheet.cursor.right(
                                 this.selectedSheet.selectedLine.textContent);
-                        }
-                        //this.selectedSheet.Append(e.key);
+=======
+        //this.Editor.isFocused = true;
+        this.focusHandler = document.addEventListener("keydown",(e)=>{
+            //if( this.Editor.isFocused ){
+            switch( e.which ){
+                case 32:{ // Space ' '
+                    //this.text.textContent += " ";
+                  //  cursor.right(this.text.textContent);
+                    cursor.space();
+                    break;
+                }
+                case 38:{ // ArrowUp ↑
 
+                    break;
+                }
+                case 40:{ // ArrowDown ↓
+                    break;
+                }
+                case 39:{ cursor.right(this.text.textContent); // ArrowRight →
+                         break;}
+                case 37:{ cursor.left(); // ArrowLeft ←
+                         break;
+>>>>>>> parent of 1df1e1e... Added space and alphanumeric key
+                        }
+                default:{
+                    if( e.code.startsWith("Key") && !e.metaKey && !e.ctrlKey ){
+                        this.text.textContent+=e.key
+                        cursor.right(this.text.textContent);
                     }
+                    //this.selectedSheet.Append(e.key);
+
                 }
             }
             if( typeof EDITOR_LOG_KEYBOARD != null && EDITOR_LOG_KEYBOARD == true){
@@ -378,8 +406,7 @@ class Cursor{
     }
 
     space(){
-        this.copy.innerHTML+="&nbsp;"
-
+        this.copy.textContent += "a";
     }
 
     left(){
