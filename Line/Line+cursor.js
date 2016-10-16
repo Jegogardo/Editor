@@ -22,14 +22,19 @@ class Line{
 
 
     // Restituisce il contenuto della linea
-    get text(){ return this.$.content.textContent;}
+    get text(){ return this.$.content.textContent}
 
     // Inizializza le proprietà
     constructor(){
 
         //Property
         this._isSelected = false;
-        this.cursor = new Cursor();
+        this.cursor = new Cursor(this);
+
+
+        Object.defineProperty( this.cursor, "parentText",{
+            get: ()=>{return this.text}
+        });
 
         this.init();
        // this.write("content");
@@ -75,10 +80,12 @@ class Line{
         this.cursor.stopBlinking = true;
 
 
+
         this.$.content.textContent = this.cursor.columns == this.text.length ?
                                     this.text + str:
                                     this.text.slice(0, this.cursor.columns) + str
                                         + this.text.slice( this.cursor.columns);
+
         this.cursor.write = this.text;
 
 
@@ -111,9 +118,15 @@ class Cursor{
     set write( str ){
         str.toString().replace(" ","&nbsp;")
         this.$.copy.innerHTML = str;
-        this.columns = str.length;
+        this._columns = str.length;
     }
 
+    get columns(){return this._columns;}
+
+    set columns( i ){
+        this._columns = i;
+        this.write = this.parentText.substring(0, this._columns)
+    }
 
 
     constructor(){
@@ -121,7 +134,7 @@ class Cursor{
         this.stopBlinking = false;
         this._isShowed = true;
 
-        this.columns = 0;
+        this._columns = 0;
 
         this.counterWords = 0;
         this.counterLetters = 0;
@@ -175,10 +188,10 @@ class Cursor{
 
     }
 
-    right(str){
-        if( str.length != this.write.length && str.length > 0 ){
+    right(){
+        if( this.parentText.length != this.write.length && this.parentText.length > 0 ){
             this.show();
-            this.write += str.substring(this.write.length,this.write.length+1);
+            this.write += this.parentText.substring(this.write.length,this.write.length+1);
            // this.columns++;
         }
     }
@@ -191,11 +204,14 @@ class Cursor{
         this.$.copy.innerHTML+="&#09;"
     }
 
+
 }
+
 
 var lines = [];
 var lastLine = new Line();
 var selectedLine = lastLine;
+var column = 1;
 selectedLine.write("provaciaobravo")//lines.length+1
 selectedLine.isSelected = true;
 lines.push(selectedLine);
@@ -208,7 +224,7 @@ document.addEventListener("keydown",(e)=>{
             selectedLine.isSelected = false;
             let line = new Line();
             selectedLine = line;
-            selectedLine.write(lines.length+1);
+            selectedLine.write(lines.length+1+"prova");
             selectedLine.isSelected = true;
             lines.push(line);
             document.body.appendChild( selectedLine.$ );
@@ -237,15 +253,20 @@ document.addEventListener("keydown",(e)=>{
             if( lines.indexOf(selectedLine) == 0 )
                 break;
 
+
             lastLine = selectedLine.valueOf();
             selectedLine.isSelected = false;
             selectedLine = lines[lines.indexOf(selectedLine)-1];
             selectedLine.isSelected = true;
 
-            if( lastLine.cursor.columns > selectedLine.cursor.columns )
-                selectedLine.cursor.columns = selectedLine.cursor.write;
-            else
-                selectedLine.cursor.columns = lastLine.cursor.columns;
+            /*column = column < selectedLine.cursor.columns?
+                    selectedLine.cursor.columns: column;
+
+            selectedLine.cursor.columns = column;*/
+            /*selectedLine.cursor.columns =
+                    lastLine.cursor.columns < column?
+                        selectedLine.text.length+1:
+                        column;*/
 
 
             break;
@@ -254,16 +275,21 @@ document.addEventListener("keydown",(e)=>{
             if( lines.indexOf(selectedLine) == lines.length-1 )
                 break;
 
+            lastLine = selectedLine.valueOf();
             selectedLine.isSelected = false;
             selectedLine = lines[lines.indexOf(selectedLine)+1];
             selectedLine.isSelected = true;
 
+      /*      selectedLine.cursor.columns =
+                lastLine.cursor.columns > selectedLine.cursor.columns ?
+                            selectedLine.text.length+1 :
+                            lastLine.cursor.columns;
+*/
             break;
         }
         case 39:{
             e.preventDefault();
-            selectedLine.cursor.right(
-                selectedLine.text); // ArrowRight →
+            selectedLine.cursor.right(); // ArrowRight →
             break;}
         case 37:{ 
             e.preventDefault();
@@ -275,12 +301,11 @@ document.addEventListener("keydown",(e)=>{
                 (e.keyCode >= 96 && e.keyCode <= 111) ||  // numpad + operations
                 (e.keyCode >= 186 && e.keyCode <= 192) || // ;=,-./ò'\
                 (e.keyCode >= 220 && e.keyCode <= 222) ||
-                e.keyCode == 226                          // <
+                 e.keyCode == 226                          // <
               ){
                 selectedLine.write(e.key);
                 //this.text.textContent+=e.key
-                selectedLine.cursor.right(
-                    selectedLine.text);
+                selectedLine.cursor.right();
             }
             //this.selectedSheet.Append(e.key);
 
